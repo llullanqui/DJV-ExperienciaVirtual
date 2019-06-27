@@ -4,30 +4,37 @@ using UnityEngine;
 
 public class MovimientoCaja : MonoBehaviour
 {
-
+    public BoxCollider2D collider;
     public Rigidbody2D rb;
     public float torqueSpeed;
     public float movementSpeed;
+    public bool isSobreSuelo;
+    public float gravityStrength;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        collider = GetComponent<BoxCollider2D>();
+        isSobreSuelo = true;
     }
 
     void Update() {
+        Vector2 gravityObject = new Vector2(0, gravityStrength);
+        Physics.gravity = gravityObject;
+
         if (Input.GetKey(KeyCode.RightArrow)){
-            torqueSpeed = -15;
-            movementSpeed = (float)0.3;
+            torqueSpeed = -70;
+            movementSpeed = (float)2;
         } else if (Input.GetKey(KeyCode.LeftArrow)) {
-            torqueSpeed = 15;
-            movementSpeed = (float)-0.3;
+            torqueSpeed = 70;
+            movementSpeed = (float)-2;
         } else {
             torqueSpeed = 0;
             movementSpeed = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            rb.AddForce(new Vector2(0,10), ForceMode2D.Impulse);
+        if (Input.GetKey(KeyCode.UpArrow) && isSobreSuelo) {
+            saltar();
         }
     }
 
@@ -37,4 +44,14 @@ public class MovimientoCaja : MonoBehaviour
         rb.AddForce (new Vector2(movementSpeed,0),ForceMode2D.Impulse);
     }
 
+    void saltar() {
+        rb.AddForce(new Vector2(0,50), ForceMode2D.Impulse);
+        isSobreSuelo = false;
+    }
+
+    void OnCollisionEnter2D(Collision2D col) {
+        if(col.gameObject.tag == "Suelo") {
+            isSobreSuelo = true;
+        }
+    }
 }
