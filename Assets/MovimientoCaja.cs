@@ -11,11 +11,14 @@ public class MovimientoCaja : MonoBehaviour
     public bool isSobreSuelo;
     public float gravityStrength;
     // Start is called before the first frame update
+    private float velocidadTorque;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         isSobreSuelo = true;
+        velocidadTorque = 65;
     }
 
     void Update() {
@@ -23,10 +26,10 @@ public class MovimientoCaja : MonoBehaviour
         Physics.gravity = gravityObject;
 
         if (Input.GetKey(KeyCode.RightArrow)){
-            torqueSpeed = -70;
+            if(isSobreSuelo) torqueSpeed = -velocidadTorque;
             movementSpeed = (float)2;
         } else if (Input.GetKey(KeyCode.LeftArrow)) {
-            torqueSpeed = 70;
+            if(isSobreSuelo) torqueSpeed = velocidadTorque;
             movementSpeed = (float)-2;
         } else {
             torqueSpeed = 0;
