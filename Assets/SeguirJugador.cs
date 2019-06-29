@@ -27,6 +27,10 @@ public class SeguirJugador : MonoBehaviour
             transform.position = new Vector3(80,transform.position.y,transform.position.z);
         } else if (88 <= (float)player.transform.position.x & (float)player.transform.position.x < 108) {
             transform.position = new Vector3(100,transform.position.y,transform.position.z);
+        } else if (108 <= (float)player.transform.position.x & (float)player.transform.position.x < 128) {
+            transform.position = new Vector3(120,transform.position.y,transform.position.z);
+        } else if (130 <= (float)player.transform.position.x & (float)player.transform.position.x < 148) {
+            transform.position = new Vector3(140,transform.position.y,transform.position.z);
         } 
     }
 }

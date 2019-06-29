@@ -12,12 +12,16 @@ public class MovimientoCaja : MonoBehaviour
     public float gravityStrength;
     // Start is called before the first frame update
     private float velocidadTorque;
+    public bool grabbedEssence;
+    public GameObject bola; 
+    public GameObject pared;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         isSobreSuelo = true;
+        grabbedEssence = false;
         velocidadTorque = 65;
     }
 
@@ -26,15 +30,16 @@ public class MovimientoCaja : MonoBehaviour
         if (transform.position.y < -7 ){
             reiniciar();
         }
+
         Vector2 gravityObject = new Vector2(0, gravityStrength);
         Physics.gravity = gravityObject;
 
         if (Input.GetKey(KeyCode.RightArrow)){
             if(isSobreSuelo) torqueSpeed = -velocidadTorque;
-            movementSpeed = (float)2;
+            movementSpeed = (float)1.5;
         } else if (Input.GetKey(KeyCode.LeftArrow)) {
             if(isSobreSuelo) torqueSpeed = velocidadTorque;
-            movementSpeed = (float)-2;
+            movementSpeed = (float)-1.5;
         } else if (Input.GetKey(KeyCode.R)) {
             reiniciar();
         } else {
@@ -61,6 +66,10 @@ public class MovimientoCaja : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col) {
         if(col.gameObject.tag == "Suelo") {
             isSobreSuelo = true;
+        } else if(col.gameObject.tag == "Objective") {
+            Destroy(bola);
+            Destroy(pared);
+            grabbedEssence = true;
         }
     }
 
