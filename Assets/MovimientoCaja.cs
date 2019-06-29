@@ -22,6 +22,10 @@ public class MovimientoCaja : MonoBehaviour
     }
 
     void Update() {
+
+        if (transform.position.y < -7 ){
+            reiniciar();
+        }
         Vector2 gravityObject = new Vector2(0, gravityStrength);
         Physics.gravity = gravityObject;
 
@@ -31,6 +35,8 @@ public class MovimientoCaja : MonoBehaviour
         } else if (Input.GetKey(KeyCode.LeftArrow)) {
             if(isSobreSuelo) torqueSpeed = velocidadTorque;
             movementSpeed = (float)-2;
+        } else if (Input.GetKey(KeyCode.R)) {
+            reiniciar();
         } else {
             torqueSpeed = 0;
             movementSpeed = 0;
@@ -56,5 +62,11 @@ public class MovimientoCaja : MonoBehaviour
         if(col.gameObject.tag == "Suelo") {
             isSobreSuelo = true;
         }
+    }
+
+    void reiniciar() {
+        torqueSpeed = 0;
+        movementSpeed = 0;
+        transform.position = new Vector3(-12,-2,0);
     }
 }
